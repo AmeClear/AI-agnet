@@ -1,5 +1,9 @@
-from langchain_core.prompts import ChatPromptTemplate
-system_template = "Translate the following into {language}:"
+#提示词
+from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
+system_template = (
+            "system",
+             "You are a helpful assistant. Answer all questions to the best of your ability in {language}.",
+        )
 prompt_template = ChatPromptTemplate.from_messages(
-    [("system", system_template), ("user", "{text}")]
+    [system_template, MessagesPlaceholder(variable_name="messages"),]
 )
