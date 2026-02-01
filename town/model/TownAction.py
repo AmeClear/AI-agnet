@@ -6,8 +6,8 @@ if TYPE_CHECKING:
     from TownAgent import TownAgent
     from TownWorld import TownWorld,TownFood
     from ImpactEffect import ImpactHunger, ImpactMood, ImpactStam
-from ..system.AgentThinkingSystem import make_food
-from ..system.HealthSystem import check_agent_action, check_agent_health
+from system.AgentThinkingSystem import make_food
+from system.HealthSystem import check_agent_action, check_agent_health
 class TownAction:
     _stamina_cost:int =0#体力消耗每小时
     _hunger_cost:int=0#饥饿消耗每小时

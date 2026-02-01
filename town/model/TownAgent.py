@@ -1,6 +1,6 @@
 from typing import Literal
 
-from TownAction import TownAction
+from .TownAction import TownAction
 
 
 class TownAgent:

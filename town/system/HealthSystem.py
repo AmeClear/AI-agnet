@@ -1,5 +1,11 @@
+from __future__ import annotations  # 放在文件最顶部
+from typing import TYPE_CHECKING
+
 from typing import Literal
-from model.TownAgent import TownAgent
+# 只在类型检查时导入
+if TYPE_CHECKING:
+    from model.TownAgent import TownAgent
+
 def check_agent_health(agent:TownAgent)->int:
     if agent.call_health() == Literal["bad"]:
         return -1

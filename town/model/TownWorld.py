@@ -1,8 +1,12 @@
 
 
+from __future__ import annotations  # 放在文件最顶部
 from typing import Literal
+from typing import TYPE_CHECKING
 
-from TownAgent import TownAgent
+# 只在类型检查时导入
+if TYPE_CHECKING:
+    from .TownAgent import TownAgent
 class TownFood:
     name:str #名称
     hunger: int #饥饿值
