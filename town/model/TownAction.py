@@ -6,7 +6,7 @@ if TYPE_CHECKING:
     from TownAgent import TownAgent
     from TownWorld import TownWorld,TownFood
     from ImpactEffect import ImpactHunger, ImpactMood, ImpactStam
-from system.AgentThinkingSystem import make_food
+from town.system.ActionSystem import make_food
 from system.HealthSystem import check_agent_action, check_agent_health
 class TownAction:
     _stamina_cost:int =0#体力消耗每小时
@@ -16,9 +16,9 @@ class TownAction:
     def push_action(self,agent:TownAgent,world:TownWorld,hour: int) -> int:
         "行动添加"
         self._hour_cost = hour
-        # #体力不够，饥饿值不够，有行动占用，健康值不足
-        # if check_agent_action(agent,self._stamina_cost,self._hunger_cost,hour) or check_agent_health(agent)<0:
-        #     return -1
+        #体力不够，饥饿值不够，有行动占用，健康值不足
+        if check_agent_action(agent,self._stamina_cost,self._hunger_cost,hour) or check_agent_health(agent)<0:
+            return -1
         #占用行为
         agent.action.append(self)
         return 1
@@ -61,8 +61,8 @@ class MakeFood(Work):
         
     def do_action(self, agent: TownAgent, world: TownWorld, hour: int):
         #智能体食物制作
-        # food = make_food(world)
-        # world.food[food]+=1
+        food = make_food(world)
+        world.food[food]+=1
         ImpactHunger().impact(agent,self._hunger_cost*hour)
         ImpactStam().impact(agent,self._stamina_cost*hour)
         #占用行为
@@ -84,5 +84,20 @@ class Eat(TownAction):
         if world.food[self.food]==0:
             return -1
         return super().push_action(agent, world, hour)
+    
+class Plant(TownAction):
+    "种植"
+    def __init__(self):
+        super().__init__()
+    def do_action(self, agent, world, hour):
+        super().do_action(agent, world, hour)
+        world.vegetables+=1
 
+class Feed(TownAction):
+    "饲养"
+    def __init__(self):
+        super().__init__()
+    def do_action(self, agent, world, hour):
+        super().do_action(agent, world, hour)
+        world.meat+=1
 

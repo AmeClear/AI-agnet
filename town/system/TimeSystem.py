@@ -11,13 +11,14 @@ from model.TownWorld import TownWorld
 def update_time(world:TownWorld):
     world.update_time(1)
     #智能体行为
-    check_action()
-    check_agent_thinking()
+    check_action(world)
+    check_agent_thinking(world)
 
 def check_action(world:TownWorld):
     "处理智能体行为"
     for agent in world.agents.values():
-        agent.action[0].cost_action(agent)
+        if len(agent.action)>0:
+            agent.action[0].cost_action(agent)
 
 def check_agent_thinking(world:TownWorld):
     "智能体思考"

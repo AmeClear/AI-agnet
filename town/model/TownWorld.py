@@ -33,21 +33,23 @@ class TownWorld:
         self.vegetables=0
         self.meat=0
         self.food=0
+        self.agents={}
+        self.food={}
         pass
 
     def call_day_type(self):
         "昼夜设定"
         if self.__time >=6 and self.__time <= 18:
-            self.__day_type=Literal["day"]
+            self.__day_type="day"
         else:
-            self.__day_type=Literal["night"]
+            self.__day_type="night"
         return self.__day_type
     
     def update_time(self,deltaTime:int):
         self.__time+=deltaTime
-        print("当前时间:");print(self.__datetime+"天");print(self.__time+"时")
         if self.__time==24:
             self.__time=0
             self.__datetime+=1
+        print(f"当前时间:{self.__datetime}天{self.__time}时")
     
 
