@@ -1,3 +1,4 @@
 from .TownAgent import TownAgent
 from .TownWorld import TownWorld
-__all__ = ['TownAgent', 'TownWorld']
+from .ObjectDefine import TownFood
+__all__ = ['TownAgent', 'TownWorld','TownFood']

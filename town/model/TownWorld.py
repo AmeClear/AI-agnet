@@ -1,22 +1,22 @@
+'''
+Author: clear.fang 729848336@qq.com
+Date: 2026-01-26 17:31:43
+LastEditors: clear.fang 729848336@qq.com
+LastEditTime: 2026-02-09 16:06:27
+FilePath: \AI-agnet\town\model\TownWorld.py
+Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+'''
 
 
 from __future__ import annotations  # 放在文件最顶部
 from typing import Literal
 from typing import TYPE_CHECKING
-
 # 只在类型检查时导入
 if TYPE_CHECKING:
     from .TownAgent import TownAgent
-class TownFood:
-    name:str #名称
-    hunger: int #饥饿值
-    mood: int #心情
-    stamina: int #体力值
-    def __init__(self,name,hunger,mood,stamina) -> None:
-        self.name = name
-        self.hunger = hunger
-        self.mood = mood
-        self.stamina = stamina
+    from .ObjectDefine import TownFood
+
+    
 
 class TownWorld:
     "世界"

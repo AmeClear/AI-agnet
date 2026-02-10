@@ -1,5 +1,5 @@
 from model import TownWorld
-from model.TownWorld import TownFood
+from model.ObjectDefine import TownFood
 
 
 def make_food(world:TownWorld)-> TownFood:

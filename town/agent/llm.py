@@ -10,10 +10,16 @@ Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查�
 #模型库
 from langchain_openai import ChatOpenAI
 
-from env import DEEPSEEK_API,DEEPSEEK_BASE_URL
-import tiktoken
-llm = ChatOpenAI(
-    model="deepseek-v3.2",
+from .ENV import DEEPSEEK_API,DEEPSEEK_BASE_URL,DEEPSEEK_NAME,OPENAI_API,OPENAI_URL,OPENAI_NAME
+
+openAI = ChatOpenAI(
+    model=OPENAI_NAME,
+    temperature=0.5,
+    api_key=OPENAI_API,
+    base_url=OPENAI_URL,
+)
+deepseek = ChatOpenAI(
+    model=DEEPSEEK_NAME,
     temperature=0.5,
     api_key=DEEPSEEK_API,
     base_url=DEEPSEEK_BASE_URL,

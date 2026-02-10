@@ -4,9 +4,10 @@ from typing import TYPE_CHECKING
 # 只在类型检查时导入
 if TYPE_CHECKING:
     from TownAgent import TownAgent
-    from TownWorld import TownWorld,TownFood
+    from TownWorld import TownWorld
     from ImpactEffect import ImpactHunger, ImpactMood, ImpactStam
-from town.system.ActionSystem import make_food
+    from .ObjectDefine import TownFood
+from system.ActionSystem import make_food
 from system.HealthSystem import check_agent_action, check_agent_health
 class TownAction:
     _stamina_cost:int =0#体力消耗每小时
