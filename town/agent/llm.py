@@ -10,7 +10,7 @@ Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查�
 #模型库
 from langchain_openai import ChatOpenAI
 
-from .ENV import DEEPSEEK_API,DEEPSEEK_BASE_URL,DEEPSEEK_NAME,OPENAI_API,OPENAI_URL,OPENAI_NAME
+from .env import DEEPSEEK_API,DEEPSEEK_BASE_URL,DEEPSEEK_NAME,OPENAI_API,OPENAI_URL,OPENAI_NAME
 
 openAI = ChatOpenAI(
     model=OPENAI_NAME,
