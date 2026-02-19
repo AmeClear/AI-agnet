@@ -1,6 +1,5 @@
 from langchain_core.prompts import ChatPromptTemplate
 from agent.OutPuts.PydanticPareser import pydantic_output
-
 def struct_output_prompt(classType)->ChatPromptTemplate:
     return ChatPromptTemplate.from_messages(
     [

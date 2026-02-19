@@ -6,7 +6,7 @@ LastEditTime: 2026-01-30 18:29:06
 FilePath: \AI-agnet\town\system\TimeSystem.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
-from model.TownWorld import TownWorld
+from model.ObjectDefine import TownWorld
 
 def update_time(world:TownWorld):
     world.update_time(1)
@@ -23,5 +23,5 @@ def check_action(world:TownWorld):
 def check_agent_thinking(world:TownWorld):
     "智能体思考"
     for agent in world.agents.values():
-        agent.decide()
+        agent.agent_decide(world)
 
