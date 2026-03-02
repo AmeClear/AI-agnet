@@ -5,6 +5,7 @@ from typing import Literal
 
 from agent.OutPuts.PydanticPareser import pydantic_output
 from agent.Prompts.StructOutputPrompt import struct_output_prompt
+from agent.Prompts.TownObjectPrompt import make_food_prompt
 
 
 
@@ -53,6 +54,7 @@ class TownAgent:
     def call_health(self):
         "健康设定"
         point =self.mood-self.hunger
+        print(f"心情:{self.mood}-饥饿:{self.hunger}-体力{self.stamina}")
         if point>0 and point<=50:
             self.__health="normal"
         if point>50:
@@ -62,23 +64,27 @@ class TownAgent:
         return self.__health
     def check_agent_health(self)->int:
         if self.call_health() == Literal["bad"]:
-            return -1
+            return 0
         else :
             return 1
     def check_agent_action(self,stamina_cost:int,hunger_cost:int,hour:int)->int:
         if self.stamina<stamina_cost*hour or self.hunger<hunger_cost*hour or self.action.count>0:
-            return -1
+            return 0
         else :
             return 1
 
     def agent_decide(self,world):
         action = MakeFood()
-        action.push_action(self,world,1)
+        if action.push_action(self,world,1) > 0:
+            pass
+        else:
+            pass
         pass
-    def decide_food(self)->TownFood:
+    def decide_food(self,world:TownWorld)->TownFood:
         #决定食物制作
         query ="制作一份食物"
-        chain = struct_output_prompt(TownFood) | self.llm | pydantic_output(TownFood)
+        prompt =make_food_prompt(world.meat,world.vegetables) +struct_output_prompt(TownFood)
+        chain =  prompt| self.llm | pydantic_output(TownFood)
         resp =chain.invoke({"query": query})
         print(resp)
         return resp
@@ -187,20 +193,22 @@ class MakeFood(Work):
     def __init__(self) -> None:
         super().__init__()
     def push_action(self, agent: TownAgent, world: TownWorld, hour: int) -> int:
-        # #食物不够
-        # if world.meat+world.vegetables<3:
-        #     return -1
-        #决定食物制作
-        self.food = agent.decide_food()
-        return super().push_action(agent, world, hour)
+        #食物不够
+        if world.meat+world.vegetables<3:
+            print("食物不够")
+            return 0
+        if super().push_action(agent, world, hour) > 0:
+            #决定食物制作
+            self.food = agent.decide_food(world)
+            return 1
+        return 0
         
     def do_action(self, agent: TownAgent, world: TownWorld, hour: int):
       
         world.food[self.food]+=1
         ImpactHunger().impact(agent,self._hunger_cost*hour)
         ImpactStam().impact(agent,self._stamina_cost*hour)
-        #占用行为
-        agent.action.append(self)
+       
         return 1
 
 class Eat(TownAction):
@@ -216,7 +224,7 @@ class Eat(TownAction):
         
     def push_action(self, agent: TownAgent, world: TownWorld, hour: int) -> int:
         if world.food[self.food]==0:
-            return -1
+            return 0
         return super().push_action(agent, world, hour)
     
 class Plant(TownAction):
